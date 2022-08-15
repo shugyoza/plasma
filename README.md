@@ -1,3 +1,14 @@
+# Aug 15, 2022
+
+Please create small project of 2 pages.
+
+Create sample project to show online shopping cart:
+
+1. Show items with Add to Cart button
+2. On click of button add item into cart
+3. Show checkout page with all the cart items with Submit button
+4. Send email based on cart item on click of Submit button
+
 # Plasma
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.6.
@@ -25,4 +36,5 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
 # plasma
