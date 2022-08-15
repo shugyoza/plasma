@@ -1,10 +1,8 @@
 <ng-container>
-    <div class="row" *ngIf="item">
+    <div class="detail" *ngIf="item">
         <p>Title: {{item.title}}</p>
         <p>Description: {{item.description}}</p>
-        <p>Price: {{item.price / 100 | currency}}</p>
+        <p>Price: {{item.price / 100 | currency: 'USD'}}</p>
+        <p><ng-content></ng-content>: {{item.quantity}}</p>
     </div>
-    <button>
-        Add to Cart
-    </button>
 </ng-container>

@@ -1,6 +1,12 @@
-<div class="row">
-    <app-item
-        *ngFor="let item of items"
-        [item]="item">
+<div class="row"
+    *ngFor="let item of items let i=index">
+
+    <app-item [item]="item">
+        In stock
     </app-item>
+
+    <button *ngIf="item && item.id"
+        (click)="clickAdd(i)">
+        Add to Cart
+    </button>
 </div>
