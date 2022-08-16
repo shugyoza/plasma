@@ -17,9 +17,9 @@
         <p>
             Your total would be: {{ total$ | async | currency: 'USD'}} for {{ (items$ | async)?.length }} item(s).
         </p>
-        <button
-            (click)="checkout()">Checkout
-        </button>
+        <app-email-form
+            (emailInput)="checkout($event)" >
+        </app-email-form>
     </div>
-
+{{items$ | async | json}}
 </div>
