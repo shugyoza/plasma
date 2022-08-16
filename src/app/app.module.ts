@@ -7,7 +7,9 @@ import { AppComponent } from './app.component';
 import { ItemComponent } from './shared/item/item.component';
 import { ListDisplayComponent } from './list-display/list-display.component';
 import { ListCheckoutComponent } from './list-checkout/list-checkout.component';
+
 import { ApiService } from './service/api.service';
+import { EmailService } from './service/email.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,7 @@ import { ApiService } from './service/api.service';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [ApiService],
+  providers: [ApiService, EmailService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
