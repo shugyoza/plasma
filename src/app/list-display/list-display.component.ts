@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 import { ApiService } from '../service/api.service';
 import { Item } from '../model/item.model';
@@ -10,7 +10,7 @@ import { Item } from '../model/item.model';
   styleUrls: ['./list-display.component.css']
 })
 export class ListDisplayComponent implements OnInit, OnDestroy {
-  items: Item[] = [];
+  items$!: Observable<Item[]>;
   subscriptions$: Subscription[] = [];
 
   constructor(private apiService: ApiService) { }
@@ -21,12 +21,7 @@ export class ListDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions$.push(this.apiService.getItems());
-    this.subscriptions$.push(
-        this.apiService.items$.subscribe({
-        next: (docs: Item[]) => this.items = docs,
-        error: (err: Error) => console.error(err)
-      })
-    );
+    this.items$ = this.apiService.items$;
   }
 
   ngOnDestroy(): void {

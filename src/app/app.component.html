@@ -1,5 +1,6 @@
 <button
   routerLink="/items">On Sale</button>
 <button
-  routerLink="/checkout">Cart</button>
+  routerLink="/checkout"
+  [disabled]="!(cart$ | async)?.length">Cart</button>
 <router-outlet></router-outlet>

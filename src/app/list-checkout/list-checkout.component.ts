@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 import { ApiService } from '../service/api.service';
 import { Item } from '../model/item.model';
@@ -11,8 +11,8 @@ import { Item } from '../model/item.model';
 })
 export class ListCheckoutComponent implements OnInit, OnDestroy {
 
-  items: Item[] = [];
-  total: number = 0;
+  items$!: Observable<Item[]>;
+  total$!: Observable<number>;
   subscriptions$: Subscription[] = [];
 
   constructor(private apiService: ApiService) { }
@@ -21,20 +21,13 @@ export class ListCheckoutComponent implements OnInit, OnDestroy {
     this.apiService.removeItem(idx);
   }
 
+  checkout(): void {
+
+  }
+
   ngOnInit(): void {
-    this.subscriptions$.push(this.apiService.getCart(this.items));
-    this.subscriptions$.push(
-        this.apiService.cart$.subscribe({
-        next: (docs: Item[]) => this.items = docs,
-        error: (err: Error) => console.error(err)
-      })
-    );
-    this.subscriptions$.push(
-      this.apiService.total$.subscribe({
-      next: (total: number) => this.total = total,
-      error: (err: Error) => console.error(err)
-    })
-  );
+    this.items$ = this.apiService.cart$;
+    this.total$ = this.apiService.total$;
   }
 
   ngOnDestroy(): void {

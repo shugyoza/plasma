@@ -11,11 +11,11 @@ export class ApiService {
 
   items: Item[] = [];
   cart: Item[] = [];
-  total: number = 0;
+  total: number = 0; // this is control number, must be integer to avoid floating points problem
 
   items$ = new ReplaySubject<Item[]>();
   cart$ = new ReplaySubject<Item[]>();
-  total$ = new ReplaySubject<number>(0)
+  total$ = new ReplaySubject<number>(0) // number to emit is total / 100
 
   constructor() { }
 
@@ -38,7 +38,7 @@ export class ApiService {
     if (this.items[idx].quantity === 0) return;
 
     this.total += this.items[idx].price;
-    this.total$.next(this.total);
+    this.total$.next(this.total / 100);
 
     // if there is stock, decrement the stock, and update the subject
     this.items[idx].quantity--;
@@ -84,7 +84,7 @@ export class ApiService {
 
     // adjust the total
     this.total -= (this.cart[idx].quantity * this.cart[idx].price);
-    this.total$.next(this.total);
+    this.total$.next(this.total / 100);
 
     // remove the item from cart
     this.cart = this.cart.filter((doc: Item, i: number) => i !== idx);

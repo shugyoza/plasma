@@ -1,17 +1,25 @@
-<div class="row"
-    *ngFor="let item of items let i=index">
+<div class="container">
+    <div class="row"
+        *ngFor="let item of items$ | async; index as i">
 
-    <app-item [item]="item">
-        Quantity
-    </app-item>
+        <app-item [item]="item">
+            Quantity
+        </app-item>
 
-    <button *ngIf="item && item.id"
-        (click)="clickRemove(i)">
-        Remove from Cart
-    </button>
-</div>
+        <button *ngIf="item && item.id"
+            (click)="clickRemove(i)">
+            Remove from Cart
+        </button>
+    </div>
 
-<div>
-    Your total would be: {{total / 100 | currency: 'USD'}} for {{items.length}} item(s).
-    <button>Checkout</button>
+    <div class="total"
+        *ngIf="(items$ | async)?.length">
+        <p>
+            Your total would be: {{ total$ | async | currency: 'USD'}} for {{ (items$ | async)?.length }} item(s).
+        </p>
+        <button
+            (click)="checkout()">Checkout
+        </button>
+    </div>
+
 </div>

@@ -1,5 +1,5 @@
 <div class="row"
-    *ngFor="let item of items let i=index">
+    *ngFor="let item of items$ | async; index as i">
 
     <app-item [item]="item">
         In stock
