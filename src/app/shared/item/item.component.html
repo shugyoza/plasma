@@ -1,7 +1,7 @@
 <ng-container>
     <div class="detail" *ngIf="item">
-        <p>Title: {{item.title}}</p>
-        <p>Description: {{item.description}}</p>
+        <h2>{{item.title}}</h2>
+        <p>{{item.description}}</p>
         <p>Price: {{item.price / 100 | currency: 'USD'}}</p>
         <p><ng-content></ng-content>: {{item.quantity}}</p>
     </div>

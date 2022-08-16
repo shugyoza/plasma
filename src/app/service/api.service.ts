@@ -19,11 +19,13 @@ export class ApiService {
 
   constructor() { }
 
+  // method to fetch list from backend
   fetchItems(): ReplaySubject<Item[]> {
     this.items$.next(items);
     return this.items$;
   }
 
+  // method to initialize listings for logic operation
   getItems(): Subscription {
     this.fetchItems();
     return this.items$
@@ -33,6 +35,7 @@ export class ApiService {
     });
   }
 
+  // method to add an item to cart
   addToCart(idx: number): void {
     // if there is no stock, just return
     if (this.items[idx].quantity === 0) return;
@@ -60,6 +63,7 @@ export class ApiService {
     }
   }
 
+  // method to initialize cart for logic operation
   getCart(cart: Item[]): Subscription {
     return this.cart$
     .subscribe({
@@ -68,8 +72,9 @@ export class ApiService {
     });
   }
 
-  removeItem(idx: number): void {
 
+  // method to remove an item from cart
+  removeItem(idx: number): void {
     // return the quantity from cart back to the stock and update subject
     let newList = [];
     for (let i = 0; i < this.items.length; i++) {

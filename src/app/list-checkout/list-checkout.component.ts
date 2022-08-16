@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription, Observable, of, ReplaySubject } from 'rxjs';
 
 import { ApiService } from '../service/api.service';
 import { EmailService } from '../service/email.service';
 import { Item } from '../model/item.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-checkout',
@@ -11,21 +12,34 @@ import { Item } from '../model/item.model';
   styleUrls: ['./list-checkout.component.css']
 })
 export class ListCheckoutComponent implements OnInit, OnDestroy {
-
-  items$!: Observable<Item[]>;
+  cart$!: Observable<Item[]>;
   total$!: Observable<number>;
   subscriptions$: Subscription[] = [];
 
   constructor(
     private apiService: ApiService,
-    private emailService: EmailService
+    private emailService: EmailService,
+    private router: Router
     ) { }
 
+  // initialize values before passing them to template
+  ngOnInit(): void {
+    this.cart$ = this.apiService.cart$;
+    this.total$ = this.apiService.total$;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions$.forEach(subscription => subscription.unsubscribe);
+  }
+
+  // method to remove an item from cart
   clickRemove(idx: number): void {
     this.apiService.removeItem(idx);
   }
 
-  checkout(emailInput: Event): void {
+
+  // method to write content of email to send to shopper
+  writeEmail(): string {
     // create email content's intro
     let details = `Hi!
                   <br><br>
@@ -38,7 +52,7 @@ export class ListCheckoutComponent implements OnInit, OnDestroy {
     let itemsQuantity = 0
     let list: Item[] = [];
 
-    // populate the above variable for us to create email content for purchase details
+    // initialize the above variables for us to create email content for purchase details
     this.subscriptions$.push(
       this.total$.subscribe({
         next: (n: number) => total = n,
@@ -46,8 +60,8 @@ export class ListCheckoutComponent implements OnInit, OnDestroy {
       })
     );
     this.subscriptions$.push(
-      this.items$.subscribe({
-        next: (items: Item[]) => list = items,
+      this.cart$.subscribe({
+        next: (cart: Item[]) => list = cart,
         error: (err: Error) => console.error(err),
       })
     );
@@ -69,33 +83,36 @@ export class ListCheckoutComponent implements OnInit, OnDestroy {
       Sincerely,<br>
       Plasma Team<br>
       (123)345-7890<br>
-      sales@plasma.com<br>
-      `;
+      sales@plasma.com<br>`;
 
-    // assemble request body, and call the API method to send email
-    const body = {
-      name: "Test",
-      email: emailInput,
-      content: details
+    return details;
+  }
+
+
+  // method to checkout
+  checkout(emailInput: string): void {
+
+    // if user give a valid email address, send them email
+    if (emailInput && emailInput.length) {
+      // assemble request body
+      const body = {
+        name: "Shopper",
+        email: emailInput,
+        content: this.writeEmail()
+      }
+      // call the API method to send email
+      this.subscriptions$.push(this.emailService.sentEmail(body));
     }
-    this.subscriptions$.push(this.emailService.sentEmail(body));
 
     // Reset all the tracker variables and observables for shopping cart
     this.apiService.cart = [];
     this.apiService.total = 0;
     this.apiService.cart$ = new ReplaySubject<Item[]>();
     this.apiService.total$ = new ReplaySubject<number>(0);
-    this.items$ = this.apiService.cart$;
+    this.cart$ = this.apiService.cart$;
     this.total$ = this.apiService.total$;
+
+    this.router.navigate(['/']);
   }
 
-  ngOnInit(): void {
-    // initialize values before passing them to template
-    this.items$ = this.apiService.cart$;
-    this.total$ = this.apiService.total$;
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions$.forEach(subscription => subscription.unsubscribe);
-  }
 }

@@ -5,7 +5,9 @@
         In stock
     </app-item>
 
-    <button *ngIf="item && item.id"
+    <button
+        class="btn-add"
+        *ngIf="item && item.id"
         (click)="clickAdd(i)">
         Add to Cart
     </button>

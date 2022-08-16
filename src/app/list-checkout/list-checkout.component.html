@@ -1,25 +1,33 @@
 <div class="container">
-    <div class="row"
-        *ngFor="let item of items$ | async; index as i">
 
-        <app-item [item]="item">
-            Quantity
-        </app-item>
+    <ng-container *ngIf="(cart$ | async)?.length; else noItemTemplate">
+        <div class="row"
+            *ngFor="let item of cart$ | async; index as i">
 
-        <button *ngIf="item && item.id"
-            (click)="clickRemove(i)">
-            Remove from Cart
-        </button>
-    </div>
+            <app-item [item]="item">
+                Quantity
+            </app-item>
 
-    <div class="total"
-        *ngIf="(items$ | async)?.length">
-        <p>
-            Your total would be: {{ total$ | async | currency: 'USD'}} for {{ (items$ | async)?.length }} item(s).
-        </p>
-        <app-email-form
-            (emailInput)="checkout($event)" >
-        </app-email-form>
-    </div>
-{{items$ | async | json}}
+            <button
+                class="btn-remove"
+                *ngIf="item && item.id"
+                (click)="clickRemove(i)">
+                Remove
+            </button>
+        </div>
+
+        <div class="total"
+            *ngIf="(cart$ | async)?.length">
+            <p>
+                Your total would be: {{ total$ | async | currency: 'USD'}} for {{ (cart$ | async)?.length }} item(s).
+            </p>
+            <app-email-form
+                (emailInput)="checkout($event)" >
+            </app-email-form>
+        </div>
+    </ng-container>
+
+    <ng-template #noItemTemplate>
+        There is no item in your cart right now.
+    </ng-template>
 </div>

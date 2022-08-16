@@ -1,6 +1,14 @@
 <button
-  routerLink="/items">Listings</button>
+  class="btn-nav"
+  routerLink="/items">
+  Listings
+</button>
+
 <button
+  class="btn-nav"
   routerLink="/checkout"
-  [disabled]="!(cart$ | async)?.length">Cart</button>
+  [disabled]="!(cart$ | async)?.length">
+  Cart
+</button>
+
 <router-outlet></router-outlet>

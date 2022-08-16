@@ -1,0 +1,25 @@
+form {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    min-width: 20rem;
+}
+fieldset {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: .5rem;
+    border: none;
+}
+.error {
+    height: 2rem;
+    color: red;
+}
+input {
+    width: 100%
+}
+.btn-checkout {
+    background-color: paleturquoise;
+    border: none;
+    padding: .5rem;
+}

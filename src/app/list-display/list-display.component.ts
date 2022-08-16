@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 
 import { ApiService } from '../service/api.service';
@@ -15,16 +15,20 @@ export class ListDisplayComponent implements OnInit, OnDestroy {
 
   constructor(private apiService: ApiService) { }
 
-  clickAdd(idx: number): void {
-    this.apiService.addToCart(idx);
-  }
-
   ngOnInit(): void {
+    // call backend to initialize values in the service
     this.subscriptions$.push(this.apiService.getItems());
+    // store observable in local variable before displaying it in template
     this.items$ = this.apiService.items$;
   }
 
   ngOnDestroy(): void {
     this.subscriptions$.forEach(subscription => subscription.unsubscribe);
   }
+
+  // method to add an item to cart
+  clickAdd(idx: number): void {
+    this.apiService.addToCart(idx);
+  }
+
 }
