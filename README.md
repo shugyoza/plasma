@@ -1,5 +1,12 @@
-# Aug 15, 2022
+# Plasma
 
+## Log:
+
+- This project was started on Aug 15, 2022 and ready to use on Aug 17, 2022;
+- It works by consuming API endpoint `/sendmail` of a backend application developed in this repo: https://github.com/shugyoza/express-nodemailer.git ;
+- This project has been developed to achieved the following stories:
+
+```
 Please create small project of 2 pages.
 
 Create sample project to show online shopping cart:
@@ -8,10 +15,13 @@ Create sample project to show online shopping cart:
 2. On click of button add item into cart
 3. Show checkout page with all the cart items with Submit button
 4. Send email based on cart item on click of Submit button
-
-# Plasma
+```
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.6.
+
+## Installation for consumption
+
+- UNDER DEVELOPMENT (will be added later)
 
 ## Development server
 
