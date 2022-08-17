@@ -9,7 +9,7 @@ import { ApiService } from './service/api.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'plasma';
+  title = 'Plasma Store';
   cart$!: Observable<Item[]>;
 
   constructor(private apiService: ApiService) { }

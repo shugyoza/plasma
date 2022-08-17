@@ -101,7 +101,13 @@ export class ListCheckoutComponent implements OnInit, OnDestroy {
         content: this.writeEmail()
       }
       // call the API method to send email
-      this.subscriptions$.push(this.emailService.sentEmail(body));
+      this.subscriptions$.push(
+        this.emailService.sendEmail(body)
+        .subscribe({
+          next: (data: any) => console.log(data),
+          error: (err: Error) => console.error(err)
+        }
+      ));
     }
 
     // Reset all the tracker variables and observables for shopping cart

@@ -1,3 +1,7 @@
+nav {
+    display: flex;
+    gap: 1rem;
+}
 .btn-nav {
     background-color: lightskyblue;
 }

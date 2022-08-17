@@ -1,14 +1,20 @@
-<button
-  class="btn-nav"
-  routerLink="/items">
-  Listings
-</button>
+<nav class="nav">
+  <h1>
+    {{title}}
+  </h1>
 
-<button
-  class="btn-nav"
-  routerLink="/checkout"
-  [disabled]="!(cart$ | async)?.length">
-  Cart
-</button>
+  <button
+    class="btn-nav"
+    routerLink="/items">
+    Listings
+  </button>
 
+  <button
+    class="btn-nav"
+    routerLink="/checkout"
+    [disabled]="!(cart$ | async)?.length">
+    Cart
+  </button>
+
+</nav>
 <router-outlet></router-outlet>

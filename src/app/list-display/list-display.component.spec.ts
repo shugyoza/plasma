@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ItemComponent } from '../shared/item/item.component';
 
 import { ListDisplayComponent } from './list-display.component';
 
@@ -8,7 +9,7 @@ describe('ListDisplayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListDisplayComponent ]
+      declarations: [ ListDisplayComponent, ItemComponent ]
     })
     .compileComponents();
   });
